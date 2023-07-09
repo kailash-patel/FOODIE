@@ -1,7 +1,7 @@
 import typer
 
 
-class ShopYooExit(typer.Exit):
+class FoodieExit(typer.Exit):
     def __init__(self, message: str):
         super().__init__(1)
         self.print_error(message)

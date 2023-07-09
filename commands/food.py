@@ -1,5 +1,5 @@
 import typer
-from models import create_tables , Food
+from models import create_tables , Food , Restaurant
 from services.food import FoodServices
 from typing_extensions import Annotated
 

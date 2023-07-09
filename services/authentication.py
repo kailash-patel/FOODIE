@@ -1,6 +1,6 @@
 import os
 import json
-from services.exception import ShopYooExit
+from services.exception import FoodieExit
 from models import User, Restaurant
 import peewee as pwee
 
@@ -11,7 +11,7 @@ class UserSession:
     and loads it when needed to avoid multiple logins for each command.
     """
 
-    session_file = "./shopyoo.session"
+    session_file = "./foodie.session"
 
     def __init__(self):
         self.current_user = None
@@ -47,20 +47,20 @@ class AuthenticationService:
 
     def is_authenticated(self):
         if self.session.current_user is None:
-            raise ShopYooExit("User is not logged in.")
+            raise FoodieExit("User is not logged in.")
 
     def signup(self, username: str, password: str):
         try:
             user = User.create(username=username, password=password)
         except pwee.IntegrityError as e:
-            raise ShopYooExit(f"User '{username}' already exists.") from e
+            raise FoodieExit(f"User '{username}' already exists.") from e
 
     def login(self, username: str, password: str):
         try:
             user = User.get(username=username, password=password)
             self.session.set_current_user(user.username)
         except pwee.DoesNotExist as e:
-            raise ShopYooExit("Check username and password") from e
+            raise FoodieExit("Check username and password") from e
 
     def load_session(self):
         if self.session.current_user is not None:
