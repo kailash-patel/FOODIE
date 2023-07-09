@@ -29,11 +29,11 @@ class Restaurant(Model):
         database=db
 
     def __str__(self) -> str:
-        return f"{self.id} {self.name} {self.rating}"
+        return f"{self.id} {self.name} {self.address}"
 
     @staticmethod
-    def add_restaurant(name: str, rating: float):
-        Restaurant.create(name=name, rating=rating)
+    def add_restaurant(name: str, address: str):
+        Restaurant.create(name=name, address=address)
 
     @staticmethod
     def remove_restaurant(name: str):
@@ -55,6 +55,7 @@ class Restaurant(Model):
 class Food(Model):
     name=CharField(unique=True)
     price=FloatField()
+    quantity=IntegerField()
     restaurant=ForeignKeyField(Restaurant, backref='food_items')
 
     class Meta:
@@ -86,7 +87,7 @@ class Food(Model):
         self.update_price(price)
         self.update_quantity(quantity)
         self.save()
-        print(f"{self.name} restocked!")
+        print(f"{self.name}  Prepared!")
 
     def update_price(self, price: int):
         if self.price != price:
@@ -133,6 +134,6 @@ class Order(Model):
 
 def create_tables():
     with db:
-        db.create_tables([Restaurant,User,Food])
+        db.create_tables([Restaurant,User,Food,Cart,Order])
 
 
