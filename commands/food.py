@@ -18,6 +18,6 @@ def add_fooditem(name: Annotated[str, typer.Option(prompt=True)],
 def remove_fooditem(name: Annotated[str,typer.Option(prompt=True)]):
         food.remove_fooditem(name=name)
 
-@app.command()
-def display_fooditem():
-        food.display_fooditem()
+@app.command(name="list")
+def list_foods():
+    food.list()

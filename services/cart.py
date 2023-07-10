@@ -14,20 +14,21 @@ class CartService:
         cart_item.add(quantity=quantity)
         food.pick_item(name, quantity)
 
+
     def remove_item(self, user, name: str, quantity: int):
         cart_item: Cart = self.get_cart_item(user=user, name=name)
         cart_item.remove(quantity=quantity)
         food = Food.get(name=name)
         food.drop_item(name, quantity)
 
-    @staticmethod
-    def get_cart_item(user, name: str) -> Cart:
-        food = Food.get(name=name)
-        try:
-            cart_item = Cart.get(item=food, user=user)
-        except Cart.DoesNotExist:
-            cart_item = Cart.create(item=food, user=user, quantity=0)
-        return cart_item
+    # @staticmethod
+    # def get_cart_item(user, name: str) -> Cart:
+    #     food = Food.get(name=name)
+    #     try:
+    #         cart_item = Cart.get(item=food, user=user)
+    #     except Cart.DoesNotExist:
+    #         cart_item = Cart.create(item=food, user=user, quantity=0)
+    #     return cart_item
 
     def display(self, user):
         cart = Cart.filter(user=user)

@@ -27,12 +27,21 @@ class FoodServices:
         except Food.DoesNotExist:
             print(f"Food '{name}' does not exist.")
 
+    def list(self):
+        foods = Food.select()
 
-    def display_fooditem(self):
-        item=Food.select()
-        table=Table("sl.no","Name","Price","Restaurant","quantity")
-    
-        for i,item in enumerate(item):
-            table.add_row(f"{i+1}",item.name,f"Rs.{item.price}",item.restaurant.name,item.quantity)
+        if foods.count() == 0:
+            print("No food items found.")
+            return
 
+        table = Table("sl.No.", "Name", "Price",  "Food-id")
+        for i, food in enumerate(foods):
+            table.add_row(
+                f"{i + 1}",
+                food.name,
+                str(food.price),
+                str(food.id),
+            )
+        
+        console.print("List of all food items:")
         console.print(table)
